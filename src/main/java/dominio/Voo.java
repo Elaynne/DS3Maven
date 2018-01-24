@@ -13,7 +13,6 @@ public class Voo {
 	   private final Date data;
 
 	   private final int capacidade;
-	   
 	   private ReservaPassagensDao reservasDao;
 
 	   public Voo(long idVoo, String origem, String destino,
@@ -39,7 +38,7 @@ public class Voo {
 	    	return  false;
 	   }
 
-	   private boolean possuiAssentoDisponivel() {
+	   public boolean possuiAssentoDisponivel() {
 		   	List<Passagem> listaPassagens = reservasDao.getPassagensPorVoo(this);
 		   	return listaPassagens.size() < getCapacidade();
 	   }
