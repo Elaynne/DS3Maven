@@ -40,12 +40,12 @@ public class VooTest {
 
     @Test
     public void testFazerReservaComSucesso() {
-       Passageiro passageiro = new Passageiro("123123", "Fulano");
-       List<Passagem> listaPassagem = new ArrayList<Passagem>();
-         when(mockReservaDao.getPassagensPorVoo(voo)).thenReturn(listaPassagem);
-         when(mockReservaDao.getPassagem(passageiro, voo)).thenReturn(null);
-         when(mockReservaDao.salvarPassagem((Passagem) notNull())).thenReturn(true);
-        assertTrue(voo.fazerReserva(passageiro));
+        Passageiro passageiro = new Passageiro("123123", "Fulano");
+        List<Passagem> listaPassagem = new ArrayList<Passagem>();
+          when(mockReservaDao.getPassagensPorVoo(voo)).thenReturn(listaPassagem);
+          when(mockReservaDao.getPassagem(passageiro, voo)).thenReturn(null);
+          when(mockReservaDao.salvarPassagem((Passagem) notNull())).thenReturn(true);
+         assertTrue(voo.fazerReserva(passageiro));
     }
     
 	/**
@@ -75,8 +75,10 @@ public class VooTest {
     {
     	Passageiro passageiro2 = new Passageiro("123321", "Cicrano");
     	List<Passagem> listaPassagem = new ArrayList<Passagem>();
+    	Passagem passage = new Passagem("1",voo,passageiro2);
+    	listaPassagem.add(passage);
         when(mockReservaDao.getPassagensPorVoo(voo)).thenReturn(listaPassagem);
-    	when(mockReservaDao.getPassagem(passageiro2, voo)).thenReturn(null);
+    	when(mockReservaDao.getPassagem(passageiro2, voo)).thenReturn(passage);
     	assertTrue(voo.passagemExistente(passageiro2));
     }
 
@@ -91,26 +93,13 @@ public class VooTest {
     	assertTrue(voo.possuiAssentoDisponivel());
     }
     
-    @Test
+    @Test(expected = Exception.class)
     public void passageiroNulo() throws Exception
     {
     	Passageiro passageiro3 = null;
     	Date data = formataData("2018-01-21 15:00:00"); 
     	Voo voo = new Voo(101, "Guarulhos", "Aracaju",data, 20, mockReservaDao);
     	//List<Passagem> listaPassagem = new ArrayList<Passagem>();
-    	//when(mockReservaDao.getPassagensPorVoo(voo)).thenReturn(listaPassagem);
-    	assertTrue(voo.passagemExistente(passageiro3));
+        assertTrue(voo.fazerReserva(null));
     }
-    
-   /* @Test
-    public void testeRemoverReservaComSucesso() {
-       Passageiro passageiro2 = new Passageiro("123321", "Beltrano");
-       List<Passagem> listaPassagem = new ArrayList<Passagem>();
-
-         when(mockRemoverReservaDao.getPassagensPorVoo(voo)).thenReturn(listaPassagem);
-         when(mockRemoverReservaDao.getPassagem(passageiro2, voo)).thenReturn(null);
-         when(mockRemoverReservaDao.removerPassagem((Passagem) notNull())).thenReturn(true);  
-        assertTrue(voo.removerReserva(passageiro2));
-    }*/
-   
 }
